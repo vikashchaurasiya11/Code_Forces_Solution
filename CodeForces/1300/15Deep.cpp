@@ -39,7 +39,8 @@ int main(){
     ll ans=b[0].first;
     ll killed=0;
 
-    //  13,4 and 18,5 then (18-4>13) so new = max(pev, current - killed)
+    //  13,4 and 18,5 then (18-4>13) so new = max(pev, current_start - total_killed)
+    // arrange in ascending order then start from first element and move further
     for(ll i=0;i<n;i++){ 
       ans=max(ans,b[i].first-killed);
       killed+=b[i].second;
