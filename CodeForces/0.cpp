@@ -1,23 +1,32 @@
-#include <iostream>
+#include<iostream>
 using namespace std;
 
 int main()
 {
-    int t;
-    cin>>t;
+  int t;
+  cin>>t;
 
-    while(t--)
+  while(t--)
+  {
+    int n,x,m;
+    cin>>n>>x>>m;
+
+    int p1=x,p2=x;
+
+    for(int i=0;i<m;i++)
     {
-        long long k,x;
-        cin>>k>>x;
+      int l,r;
+      cin>>l>>r;
 
-        while(k--)
-        {
-            x*=2;
-        }
-
-        cout<<x<<endl;
+      if(r>=p1&&l<=p2)
+      {
+        p1=min(p1,l);
+        p2=max(p2,r);
+      }
     }
 
-    return 0;
+    cout<<p2-p1+1<<endl;
+  }
+
+  return 0;
 }
