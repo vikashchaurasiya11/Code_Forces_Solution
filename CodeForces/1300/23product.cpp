@@ -35,14 +35,14 @@ int main(){
       for(ll i=2;i*i<=n; i++){
         if(n%i==0) {
           ans.push_back(i);
-          n/=i; 
+          n/=i;  // n will get updated, remaining n at the end of this loop is the value of the c if it satisfy the constraints.
           if(ans.size()==2) break;
         }
       }
 
       if(ans.size()==1) cout<<"NO"<<endl;
       else{
-        if(n>1 && (n != ans[0]) && n!= ans[1]){
+        if(n>1 && (n != ans[0]) && n!= ans[1]){ // this condn must hold true.
           cout<<"YES"<<endl;
           cout<<ans[0]<<" "<<ans[1]<<" "<<n<<endl;
         }
