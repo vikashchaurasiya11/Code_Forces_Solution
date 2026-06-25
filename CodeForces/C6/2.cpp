@@ -1,78 +1,55 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include <queue>
+#include <climits>
+#include <cmath>
+#include <map>
+#include <set>
+
 using namespace std;
 
-typedef long long ll;
+int main() {
+    int t;
+    cin >> t;
+    while (t--) {
+        int n;
+        cin >> n;
+        vector<int> a(n), c(n);
 
-int main(){
-  int t;
-  cin>>t;
-
-  while(t--){
-    int n;
-    cin>>n;
-
-    vector<ll>a(n);
-    for(int i=0;i<n;i++){
-      cin>>a[i];
-    }
-
-    vector<ll>b(n);
-    for(int i=0;i<n;i++){
-      cin>>b[i];
-    }
-
-    vector<ll> c=a;
-    sort(c.begin(),c.end());
-
-    bool flag=false;
-
-    for(int i=0;i<n;i++){
-      if(c[i]>b[i]){
-        flag=true;
-        break;
-      }
-    }
-
-    if(flag){
-      cout<<-1<<endl;
-      continue;
-    }
-
-    vector<vector<int>> pos(n+1);
-
-    for(int i=0;i<n;i++){
-      int p=lower_bound(b.begin(),b.end(),a[i])-b.begin();
-      pos[p].push_back(i);
-    }
-
-    priority_queue<int,vector<int>,greater<int>> pq;
-    vector<int> p;
-
-    for(int i=0;i<n;i++){
-      for(auto x:pos[i]){
-
-        pq.push(x);
-      }
-
-      p.push_back(pq.top());
-      pq.pop();
-    }
-
-    ll ans=0;
-
-    for(int i=0;i<n;i++){
-      for(int j=i+1;j<n;j++){
-        if(p[i]>p[j]){
-          ans++;
+        for (int i = 0; i < n; i++) cin >> a[i];
+        set<int> s;
+        for (int i = 0; i < n; i++) {
+            int x;
+            cin >> x;
+            s.insert(x); // no repetion in que, so no number gets removed
         }
-      }
+
+        bool y = true;
+        for (int i = 0; i < n; ++i) {
+            auto it = s.lower_bound(a[i]); // first ele which >= a[i] in the set
+            if (it == s.end()) { // if such elements no found in the set
+                y = false;
+                break;
+            }
+            c[i] = *it; // store that value in c[i]
+            s.erase(it); // erase after using it.
+        }
+        if (!y) {
+            cout << -1 << '\n'; // not found then false
+            continue;
+        }
+        int ans = 0;
+        for (int i = 0; i < n; ++i) { // inversion formula
+            for (int j = i + 1; j < n; ++j) { // i<j nut c[i]>c[j] ans ++;
+                if (c[i] > c[j]) {
+                    ans++;
+                }
+            }
+        }
+        cout << ans << '\n';
     }
-
-    cout<<ans<<endl;
-  }
-
-  return 0;
+    return 0;
 }
+
+
+// hamne b wale array kko a ke according sort kar liya using set. as per question i<j then b[i]<b[j], so after soting we check , if there is any i and j where i <j and b[i]>b[j] so we increase the ans by 1.

@@ -1,57 +1,64 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include <climits>
-#include <cmath>
 using namespace std;
 typedef long long ll;
 
-bool isPrime(ll a){
-  if (a<2) return false;
-  for(ll i=2;i*i<=a; i++){
-    if(a%i ==0){
-      return 0;
-    }
-  }
-  return 1;
-}
-
-int main(){
+int main()
+{
   int t;
   cin>>t;
-  while(t--){
-    ll n;
+
+  while(t--)
+  {
+    int n;
     cin>>n;
 
-    
-    if(isPrime(n)){
+    vector<ll>a(n),b;
+    for(int i=0;i<n;i++)
+    {
+      cin>>a[i];
+    }
+
+    b=a;
+    sort(b.begin(),b.end());
+
+    ll k=-1;
+    bool ok=true;
+
+    for(int i=0;i<n;i++)
+    {
+      ll d=b[i]-a[i];
+
+      if(d<0)
+      {
+        ok=false;
+        break;
+      }
+
+      if(d>0)
+      {
+        if(k==-1)
+        {
+          k=d;
+        }
+        else if(k!=d)
+        {
+          ok=false;
+          break;
+        }
+      }
+    }
+
+    if(ok)
+    {
+      cout<<"YES"<<endl;
+    }
+    else
+    {
       cout<<"NO"<<endl;
-      continue;
     }
-    else{
-
-      vector<ll> ans;
-      ll flag=0;
-      for(ll i=2;i*i<=n; i++){
-        if(n%i==0) {
-          ans.push_back(i);
-          n/=i; 
-          if(ans.size()==2) break;
-        }
-      }
-
-      if(ans.size()==1) cout<<"NO"<<endl;
-      else{
-        if(n>1 && (n != ans[0]) && n!= ans[1]){
-          cout<<"YES"<<endl;
-          cout<<ans[0]<<" "<<ans[1]<<" "<<n<<endl;
-        }
-        else cout<<"NO"<<endl;
-      }
-
-    }
-
-    
   }
+
   return 0;
-}  
+}
